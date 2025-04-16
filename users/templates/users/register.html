@@ -1,0 +1,32 @@
+{% extends "learning_logs/base.html" %}
+
+{% load bootstrap3 %}
+
+{% block header %}
+    <h1>Criar conta</h1>
+{% endblock header %}
+
+
+{% block content %}
+
+    {% if form.errors %}
+    <!-- este paragrafo so vai existir se tiver algum erro na hora do cadastro-->
+
+        <p class="aviso-error" style="color: red;">* O nome de usuário não deve conter caracteres especiais</p>
+        <p class="aviso-error"style="color: red;">* A senha deve ter mais de 8 dígitos, letras, números, caracteres especiais e não pode conter o nome de usuário</p>
+        <p class="aviso-error"style="color: red;">* As senhas digitadas precisam estar iguais</p>
+    {% endif %}
+    <form action="{% url 'register' %}" method="POST" class="ul-none" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Registrar</button>
+        {% endbuttons %}
+        
+        <!-- Para qual pagina nos vamos caso o usuario faça a autentificação
+        o input do tipo hidden é oculto ele não apareço na pagina, o value é o endereço para onde nos vamos -->
+        <input type="hidden" name="next" value= "{% url 'index' %}"/>
+    </form>
+
+
+{% endblock content %}
